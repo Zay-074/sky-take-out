@@ -43,10 +43,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Bean
     public Docket docket() {
+        log.info("开始创建knife4j实例...");
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("苍穹外卖项目接口文档")
-                .version("2.0")
-                .description("苍穹外卖项目接口文档")
+                .title("苍穹外卖项目接口文档")    // 标题
+                .version("2.0")                 // 版本
+                .description("苍穹外卖项目接口文档")  //简介
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo)
@@ -62,6 +63,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * @param registry
      */
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        log.info("开始进行静态资源映射...");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
