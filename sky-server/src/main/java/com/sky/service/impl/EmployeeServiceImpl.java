@@ -28,6 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private EmployeeService employeeService;
 
     /**
      * 员工登录
@@ -106,6 +108,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         pageResult.setTotal(page.getTotal());
         pageResult.setRecords(page.getResult());
         return pageResult;
+    }
+
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        //根据员工ID修改员工数据
+        employeeMapper.update(employee);
     }
 
 }
