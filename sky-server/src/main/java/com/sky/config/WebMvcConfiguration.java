@@ -46,6 +46,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
      * 通过knife4j生成接口文档
+     *
      * @return
      */
     @Bean
@@ -67,6 +68,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
      * 设置静态资源映射
+     *
      * @param registry
      */
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -74,8 +76,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
     /**
      * 扩展消息转换器
+     *
      * @param converters
      */
     @Override
@@ -86,6 +90,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         //设置对象转换器，将Java对象序列化为json
         converter.setObjectMapper(new JacksonObjectMapper());
         //将消息转换器对象追加到converters中
-        converters.add(0,converter);
+        converters.add(0, converter);
     }
 }
