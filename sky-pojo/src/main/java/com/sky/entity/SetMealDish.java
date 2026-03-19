@@ -32,7 +32,11 @@ public class SetMealDish implements Serializable {
 
     //菜品原价
     private BigDecimal price;
-
+// ... existing code ...
     //份数
     private Integer copies;
+
+    //套餐状态：1 为起售 0 为停售
+    private Integer status;
+
 }

@@ -62,41 +62,28 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 新增套餐，同时需要保存套餐和菜品的关联关系
-     * @param setMealDTO
+     * @param setmealDTO
      * @return
      */
     @Transactional
-    public void saveWithDish(SetMealDTO setMealDTO) {
-        log.info("开始保存套餐，套餐信息：{}", setMealDTO);
-        SetMeal setMeal = new SetMeal();
-        BeanUtils.copyProperties(setMealDTO, setMeal);
-    
+    public void saveWithDish(SetMealDTO setmealDTO) {
+        SetMeal setmeal = new SetMeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+
         //向套餐表插入数据
-        setMealMapper.insert(setMeal);
-        log.info("套餐表插入成功，生成的套餐 ID: {}", setMeal.getId());
-    
-        //获取生成的套餐 id
-        Long setMealId = setMeal.getId();
-    
-        List<SetMealDish> setMealDishes = setMealDTO.getSetMealDishes();
-        log.info("获取到套餐菜品关联数据，数量：{}", setMealDishes == null ? "null" : setMealDishes.size());
-            
-        //只有当套餐菜品不为空时才保存
-        if (setMealDishes != null && !setMealDishes.isEmpty()) {
-            log.info("开始保存套餐菜品关联关系...");
-            setMealDishes.forEach(setMealDish -> {
-                setMealDish.setSetmealId(setMealId);
-                log.info("设置套餐菜品关联：套餐 ID={}, 菜品 ID={}, 名称={}, 价格={}, 份数={}", 
-                    setMealDish.getSetmealId(), setMealDish.getDishId(), 
-                    setMealDish.getName(), setMealDish.getPrice(), setMealDish.getCopies());
-            });
-    
-            //保存套餐和菜品的关联关系
-            setMealDishMapper.insertBatch(setMealDishes);
-            log.info("套餐菜品关联关系保存成功，共{}条", setMealDishes.size());
-        } else {
-            log.warn("套餐菜品关联数据为空，跳过保存");
-        }
+        setMealMapper.insert(setmeal);
+
+        //获取生成的套餐id
+        Long setMealId = setmeal.getId();
+
+        List<SetMealDish> setmealDishes = setmealDTO.getSetMealDishes();
+        log.info("套餐菜品关系：{}", setmealDishes);
+        setmealDishes.forEach(setmealDish -> {
+            setmealDish.setSetmealId(setMealId);
+        });
+
+        //保存套餐和菜品的关联关系
+        setMealDishMapper.insertBatch(setmealDishes);
     }
 
     @Override

@@ -9,7 +9,6 @@ import com.sky.vo.SetMealVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,24 +28,9 @@ public class SetMealController {
      * @return
      */
     @PostMapping
+    @ApiOperation("新增套餐")
     public Result save(@RequestBody SetMealDTO setmealDTO) {
-        log.info("===== 新增套餐 - 开始 =====");
-        log.info("套餐基本信息：categoryId={}, name={}, price={}, status={}, description={}, image={}", 
-            setmealDTO.getCategoryId(), setmealDTO.getName(), setmealDTO.getPrice(), 
-            setmealDTO.getStatus(), setmealDTO.getDescription(), setmealDTO.getImage());
-        
-        if (setmealDTO.getSetMealDishes() != null) {
-            log.info("接收到套餐菜品关联数据，数量：{}", setmealDTO.getSetMealDishes().size());
-            for (int i = 0; i < setmealDTO.getSetMealDishes().size(); i++) {
-                var dish = setmealDTO.getSetMealDishes().get(i);
-                log.info("菜品 [{}] - dishId: {}, name: {}, price: {}, copies: {}", 
-                    i, dish.getDishId(), dish.getName(), dish.getPrice(), dish.getCopies());
-            }
-        } else {
-            log.warn("setMealDishes 为 null");
-        }
-        log.info("===== 新增套餐 - 结束 =====");
-
+        log.info("新增套餐：{}", setmealDTO);
         setMealService.saveWithDish(setmealDTO);
         return Result.success();
     }
@@ -82,13 +66,13 @@ public class SetMealController {
     /**
      * 修改套餐
      *
-     * @param setMealDTO
+     * @param setmealDTO
      * @return
      */
     @PutMapping
     @ApiOperation("修改套餐")
-    public Result update(@RequestBody SetMealDTO setMealDTO) {
-        setMealService.update(setMealDTO);
+    public Result update(@RequestBody SetMealDTO setmealDTO) {
+        setMealService.update(setmealDTO);
         return Result.success();
     }
 

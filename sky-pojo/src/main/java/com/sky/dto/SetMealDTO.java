@@ -1,5 +1,6 @@
 package com.sky.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sky.entity.SetMealDish;
 import lombok.Data;
 import java.io.Serializable;
@@ -31,6 +32,7 @@ public class SetMealDTO implements Serializable {
     private String image;
 
     //套餐菜品关系
+    @JsonProperty("setmealDishes")
     private List<SetMealDish> setMealDishes = new ArrayList<>();
 
 }
