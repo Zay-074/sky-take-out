@@ -22,6 +22,11 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    /**
+     * 将商品添加至购物车
+     * @param shoppingCartDTO
+     * @return
+     */
     @PostMapping("/add")
     @ApiOperation("添加购物车")
     public Result add(@RequestBody ShoppingCartDTO shoppingCartDTO){
@@ -30,6 +35,11 @@ public class ShoppingCartController {
         return Result.success();
     }
 
+
+    /**
+     * 购物车反显
+     * @return
+     */
     @GetMapping("/list")
     @ApiOperation("查询购物车")
     public Result<List<ShoppingCart>> list(){
@@ -37,9 +47,23 @@ public class ShoppingCartController {
         List<ShoppingCart> list =  shoppingCartService.showShoppingCart();
         return Result.success(list);
     }
+
+    /**
+     * 清空购物车
+     * @return
+     */
     @DeleteMapping("/clean")
     public Result clean(){
         shoppingCartService.clean();
+        return Result.success();
+    }
+
+    /**
+     * 减少购物车商品数量
+     */
+    @PostMapping("/sub")
+    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO){
+        shoppingCartService.sub(shoppingCartDTO);
         return Result.success();
     }
 }
